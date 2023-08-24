@@ -1,45 +1,56 @@
 #include "monty.h"
 
 /**
- * _push - push data to the top of a stack
- * @head: the head of a stack double ll
- * @line_number: line number parsed
+ * _push - pushes an element to the stack.
+ * @stack: pointer to doubly linked list repesentation of stack.
+ * @line_number: the line where instruction appears.
+ *
  */
-void _push(stack_t **head, unsigned int line_number)
+void _push(stack_t **stack, unsigned int line_number)
 {
-	int n, j = 0, flag = 0;
+	stack_t *temp, *new;
+	int n, i, nodigit;
 
-	if (buf.arg)
+	if (info.argv != NULL)
 	{
-		if (buf.arg[0] == '-')
-			j++;
-		for (; buf.arg[j] != '\0'; j++)
+		for (i = 0; info.argv[i] != '\0'; i++)
 		{
-			if (buf.arg[j] > 57 || buf.arg[j] < 48)
-				flag = 1;
-		}
-		if (flag == 1)
-		{ fprintf(stderr, "L%d: usage: push integer\n", line_number);
-			fclose(buf.file);
-			free(buf.command);
-			free_dlist(*head);
-			exit(EXIT_FAILURE);
+			if (!(_isdigit(info.argv[i])))
+				nodigit = 1;
 		}
 	}
-	else
+	if (info.argv == NULL || nodigit == 1)
 	{
 		fprintf(stderr, "L%d: usage: push integer\n", line_number);
-		fclose(buf.file);
-		free(buf.command);
-		free_dlist(*head);
+		_finish(info.file, stack, info.monty_op);
 		exit(EXIT_FAILURE);
 	}
-	n = atoi(buf.arg);
-	if (buf.flag == 0)
-		addnode(head, n);
+	n = atoi(info.argv);
+	temp = *stack;
+	new = malloc(sizeof(stack_t));
+	if (new == NULL)
+	{
+		fprintf(stderr, "Error: malloc failed\n");
+		exit(EXIT_FAILURE);
+	}
+	new->n = n;
+	new->prev = NULL;
+	if (temp == NULL)
+	{
+		new->next = NULL;
+		*stack = new;
+	}
 	else
-		addqueue(head, n);
+	{
+		temp->prev = new;
+		new->next = temp;
+		*stack = new;
+	}
 }
+
+
+
+
 /**
  * _isdigit - a function that checks for digit.
  * @c: character

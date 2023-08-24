@@ -1,20 +1,21 @@
 #include "monty.h"
-#include "buf.h"
+
+info_t info = { NULL, NULL, NULL};
 /**
- * main - main function for monty interpreter
- * @argc: argument count
- * @argv: arrays of arguments
- * Return: returs 0 on success
+ * main - interpreter for Monty ByteCodes files.
+ * @argc: number of arguments.
+ * @argv: path to the file monty byte code.
+ *
+ * Return: 0 on success.
  */
-int main(int argc, string argv[])
+int main(int argc, char **argv)
 {
-	string command;
 	FILE *file;
-	size_t n = 0;
-	/*string str = NULL;*/
-	ssize_t readl = 1;
+	ssize_t readline;
+	char *monty_op;
+	size_t size = 32;
+	unsigned int line_number = 0;
 	stack_t *stack = NULL;
-	unsigned int count = 0;
 
 	if (argc != 2)
 	{
@@ -22,25 +23,29 @@ int main(int argc, string argv[])
 		exit(EXIT_FAILURE);
 	}
 	file = fopen(argv[1], "r");
-	buf.file = file;
-
-	if (!file)
+	if (file == NULL)
 	{
 		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
 		exit(EXIT_FAILURE);
 	}
-	while (readl > 0)
+	info.file = file;
+	monty_op = malloc(size * sizeof(char));
+	if (monty_op == NULL)
 	{
-		command = NULL;
-		readl = getline(&command, &n, file);
-		buf.command = command;
-		count++;
-		if (readl > 0)
-			exec_op(command, &stack, count, file);
-		free(command);
+		fprintf(stderr, "Error: malloc failed\n");
+		exit(EXIT_FAILURE);
 	}
-	free_dlist(stack);
+	while (readline > 0)
+	{
+		monty_op = NULL;
+		readline = getline(&monty_op, &size, file);
+		line_number++;
+		if (readline > 0)
+			exe_opcode(monty_op, &stack, line_number, file);
+		free(monty_op);
+	}
+	_free(stack);
 	fclose(file);
-return (0);
+		return (0);
 }
 
