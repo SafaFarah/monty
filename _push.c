@@ -35,17 +35,10 @@ void _push(stack_t **stack, unsigned int line_number)
 	}
 	new->n = n;
 	new->prev = NULL;
-	if (temp == NULL)
-	{
-		new->next = NULL;
-		*stack = new;
-	}
-	else
-	{
+	if (temp != NULL)
 		temp->prev = new;
-		new->next = temp;
-		*stack = new;
-	}
+	new->next = *stack;
+	*stack = new;
 }
 
 

@@ -19,10 +19,10 @@ int exe_opcode(char *monty_op, stack_t **stack, unsigned int line, FILE *file)
 	unsigned int i = 0;
 	char *opc;
 
-	opc = strtok(monty_op, "\n\t");
+	opc = strtok(monty_op, " \n\t");
 	if (opc != NULL && opc[0] == '#')
 		return (0);
-	info.argv = strtok(NULL, "\n\t");
+	info.argv = strtok(NULL, " \n\t");
 	while (operations[i].opcode != NULL && opc != NULL)
 	{
 		if (strcmp(opc, operations[i].opcode) == 0)
