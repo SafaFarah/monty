@@ -1,13 +1,13 @@
-#ifndef MONTY_H
-#define MONTY_H
+#ifndef _MONTY_H
+#define _MONTY_H
 #define _GNU_SOURCE
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <string.h>
 #include <ctype.h>
 
 /**
@@ -15,7 +15,6 @@
  * @n: integer
  * @prev: points to the previous element of the stack (or queue)
  * @next: points to the next element of the stack (or queue)
- *
  * Description: doubly linked list node structure
  * for stack, queues, LIFO, FIFO
  */
@@ -40,29 +39,51 @@ typedef struct instruction_s
 	char *opcode;
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
-
-
 /**
- * struct info_s - code file , line content and array pointer to arguments.
- * @file: code file pointer.
- * @argv: array pointer to arguments.
- * @monty_op: line content.
- *
- * Description: information about operations code file-line content-arguments.
+ * struct buf_obj - buffer object
+ * @arg: parsed args
+ * @file: monty file pointer
+ * @command: line commands
+ * @flag: arg flag
+ * Description: parameters objects
  */
-typedef struct info_s
+typedef struct buf_obj
 {
+	char *arg;
 	FILE *file;
-	char *monty_op;
-	char *argv;
-} info_t;
+	char *command;
+	int flag;
+}  buf_obj;
+extern buf_obj buf;
+typedef char *string;
 
-extern info_t info;
-void _push(stack_t **stack, unsigned int line_number);
-int _isdigit(int c);
-void _pall(stack_t **stack, unsigned int line_number);
-int exe_opcode(char *monty_op, stack_t **stack, unsigned int line, FILE *file);
-void _finish(FILE *file, stack_t **stack, char *monty_op);
-void _free(stack_t *pointer);
+/*DLL Functions*/
+void free_dlist(stack_t *head);
+void addnode(stack_t **head, int n);
+void addqueue(stack_t **head, int n);
+
+/**Opcodes execute functon*/
+int exec_op(string command, stack_t **head, unsigned int count, FILE *file);
+
+/*Stack operation functions*/
+void _push(stack_t **head, unsigned int line_number);
+void _pall(stack_t **head, unsigned int line_number);
+void _pint(stack_t **head, unsigned int line_number);
+void _pop(stack_t **head, unsigned int line_number);
+void _swap(stack_t **head, unsigned int line_number);
+void _add(stack_t **head, unsigned int line_number);
+void _nop(stack_t **head, unsigned int line_number);
+void _sub(stack_t **head, unsigned int line_number);
+void _div(stack_t **head, unsigned int line_number);
+void _mul(stack_t **head, unsigned int line_number);
+void _mod(stack_t **head, unsigned int line_number);
+void _pchar(stack_t **head, unsigned int line_number);
+void _pstr(stack_t **head, unsigned int line_number);
+void _rotl(stack_t **head, unsigned int line_number);
+void _rotr(stack_t **head, unsigned int line_number);
+void _stack(stack_t **head, unsigned int line_number);
+void _queue(stack_t **head, unsigned int line_number);
+
 
 #endif
+

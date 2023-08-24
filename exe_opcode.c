@@ -1,55 +1,48 @@
 #include "monty.h"
-
 /**
- * exec_opcode - executes the opcode instructions.
- * @stack: head of doubly linked list.
- * @line: number of line.
- * @file: pointer to monty byte code file.
- * @monty_op: line content
- *
- * Return: 0 on success or 1 on failure.
- */
-int exe_opcode(char *monty_op, stack_t **stack, unsigned int line, FILE *file)
+* exec_op - execute the opcode
+* @head: head linked list - stack
+* @count: line_counter
+* @file: poiner to monty file
+* @command: line content
+* Return: no return
+*/
+
+int exec_op(string command, stack_t **head, unsigned int count, FILE *file)
 {
-	instruction_t operations[] = {
+	string delim = " \n\t";
+	unsigned int i = 0;
+	string c_op;
+
+	/*Declaring the opcodes struct*/
+	instruction_t opt[] = {
 		{"push", _push},
 		{"pall", _pall},
 		{NULL, NULL}
 	};
-	unsigned int i = 0;
-	char *opc;
-
-	opc = strtok(monty_op, " \n\t");
-	if (opc != NULL && opc[0] == '#')
+	/*Tokenzing the commands args to be executed */
+	c_op = strtok(command, delim);
+	if (c_op && c_op[0] == '#')
 		return (0);
-	info.argv = strtok(NULL, " \n\t");
-	while (operations[i].opcode != NULL && opc != NULL)
+	buf.arg = strtok(NULL, delim);
+	while (opt[i].opcode && c_op)
 	{
-		if (strcmp(opc, operations[i].opcode) == 0)
+		if (strcmp(c_op, opt[i].opcode) == 0)
 		{
-			operations[i].f(stack, line);
+			opt[i].f(head, count);
 			return (0);
 		}
 		i++;
 	}
-	if (opc != NULL && operations[i].opcode == NULL)
+	if (c_op && !opt[i].opcode)
 	{
-		fprintf(stderr, "L%d: unknown instruction %s\n", line, opc);
-		_finish(file, stack, monty_op);
+		fprintf(stderr, "L%d: unknown instruction %s\n", count, c_op);
+		fclose(file);
+		free(command);
+		free_dlist(*head);
 		exit(EXIT_FAILURE);
 	}
 	return (1);
-}
 
-/**
- * _finish  - frees stack  and close file.
- * @stack: head of doubly linked list.
- * @file: pointer to monty byte code file.
- * @monty_op: line content
- */
-void _finish(FILE *file, stack_t **stack, char *monty_op)
-{
-	fclose(file);
-	free(monty_op);
-	_free(*stack);
+
 }
