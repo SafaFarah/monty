@@ -1,6 +1,5 @@
 #include "monty.h"
 
-info_t info = { NULL, NULL, NULL};
 /**
  * main - interpreter for Monty ByteCodes files.
  * @argc: number of arguments.
@@ -8,6 +7,7 @@ info_t info = { NULL, NULL, NULL};
  *
  * Return: 0 on success.
  */
+info_t info = { NULL, NULL, NULL};
 int main(int argc, char **argv)
 {
 	FILE *file;
@@ -17,6 +17,7 @@ int main(int argc, char **argv)
 	unsigned int line_number = 0;
 	stack_t *stack = NULL;
 
+	(void)info;
 	if (argc != 2)
 	{
 		fprintf(stderr, "USAGE: monty file\n");

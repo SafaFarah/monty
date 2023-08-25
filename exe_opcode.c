@@ -1,7 +1,7 @@
 #include "monty.h"
 
 /**
- * exec_opcode - executes the opcode instructions.
+ * exe_opcode - executes the opcode instructions.
  * @stack: head of doubly linked list.
  * @line: number of line.
  * @file: pointer to monty byte code file.
@@ -14,15 +14,24 @@ int exe_opcode(char *monty_op, stack_t **stack, unsigned int line, FILE *file)
 	instruction_t operations[] = {
 		{"push", _push},
 		{"pall", _pall},
+		{"pint", _pint},
+		{"pop", _pop},
+		{"swap", _swap},
+		{"add", _add},
+		{"sub", _sub},
+		{"mul", _mul},
+		{"div", _div},
+		{"mod", _mod},
+		{"nop", _nop},
 		{NULL, NULL}
 	};
 	unsigned int i = 0;
 	char *opc;
 
-	opc = strtok(monty_op, "\n\t");
+	opc = strtok(monty_op, " \n\t");
 	if (opc != NULL && opc[0] == '#')
 		return (0);
-	info.argv = strtok(NULL, "\n\t");
+	info.argv = strtok(NULL, " \n\t");
 	while (operations[i].opcode != NULL && opc != NULL)
 	{
 		if (strcmp(opc, operations[i].opcode) == 0)
