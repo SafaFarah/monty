@@ -8,7 +8,6 @@ void _free(stack_t *pointer)
 {
 	stack_t *temp;
 
-	temp = pointer;
 	while (pointer != NULL)
 	{
 		temp = pointer->next;

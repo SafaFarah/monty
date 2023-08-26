@@ -60,7 +60,7 @@ extern info_t info;
 void _push(stack_t **stack, unsigned int line_number);
 int _isdigit(int c);
 void _pall(stack_t **stack, unsigned int line_number);
-int exe_opcode(char *monty_op, stack_t **stack, unsigned int line, FILE *file);
+int exe_opcode(string *monty_op, stack_t **stack, unsigned int line, FILE *file);
 void _finish(FILE *file, stack_t **stack, char *monty_op);
 void _free(stack_t *pointer);
 void _swap(stack_t **stack, unsigned int line_number);
