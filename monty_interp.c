@@ -12,11 +12,16 @@ int main(int argc, string argv[])
 	FILE *file;
 	ssize_t readline = 1;
 	string monty_op;
+=======
+int main(int argc, char **argv)
+{
+	FILE *file;
+	ssize_t readline = 1;
+	char *monty_op;
 	size_t size = 0;
 	unsigned int line_number = 0;
 	stack_t *stack = NULL;
 
-	(void)info;
 	if (argc != 2)
 	{
 		fprintf(stderr, "USAGE: monty file\n");
@@ -41,6 +46,6 @@ int main(int argc, string argv[])
 	}
 	_free(stack);
 	fclose(file);
-		return (0);
+	return (0);
 }
 
