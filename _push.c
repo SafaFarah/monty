@@ -13,19 +13,13 @@ void _push(stack_t **stack, unsigned int line_number)
 
 	if (info.argv != NULL)
 	{
-		for (i = 0; info.argv[i] != '\0'; i++)
+		for (; info.argv[i] != '\0'; i++)
 		{
 			if (info.argv[i] > 57 || info.argv[i] < 48)
 				nodigit = 1;
 		}
 	}
-	if (nodigit == 1)
-	{
-		fprintf(stderr, "L%d: usage: push integer\n", line_number);
-		_finish(info.file, stack, info.monty_op);
-		exit(EXIT_FAILURE);
-	}
-	else
+	if (info.argv == NULL || nodigit == 1)
 	{
 		fprintf(stderr, "L%d: usage: push integer\n", line_number);
 		_finish(info.file, stack, info.monty_op);
@@ -37,7 +31,6 @@ void _push(stack_t **stack, unsigned int line_number)
 	if (new == NULL)
 	{
 		fprintf(stderr, "Error: malloc failed\n");
-		_finish(info.file, stack, info.monty_op);
 		exit(EXIT_FAILURE);
 	}
 	new->n = n;
