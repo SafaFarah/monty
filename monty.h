@@ -8,6 +8,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <ctype.h>
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -57,6 +58,7 @@ typedef struct info_s
 } info_t;
 
 extern info_t info;
+
 void _push(stack_t **stack, unsigned int line_number);
 int _isdigit(int c);
 void _pall(stack_t **stack, unsigned int line_number);

@@ -1,4 +1,5 @@
 #include "monty.h"
+info_t info = {NULL, NULL, NULL};
 
 /**
  * main - interpreter for Monty ByteCodes files.
@@ -7,17 +8,15 @@
  *
  * Return: 0 on success.
  */
-info_t info = { NULL, NULL, NULL};
 int main(int argc, char **argv)
 {
 	FILE *file;
-	ssize_t readline;
+	ssize_t readline = 1;
 	char *monty_op;
-	size_t size = 32;
+	size_t size = 0;
 	unsigned int line_number = 0;
 	stack_t *stack = NULL;
 
-	(void)info;
 	if (argc != 2)
 	{
 		fprintf(stderr, "USAGE: monty file\n");
@@ -40,6 +39,7 @@ int main(int argc, char **argv)
 	{
 		monty_op = NULL;
 		readline = getline(&monty_op, &size, file);
+		info.monty_op = monty_op;
 		line_number++;
 		if (readline > 0)
 			exe_opcode(monty_op, &stack, line_number, file);
@@ -47,6 +47,6 @@ int main(int argc, char **argv)
 	}
 	_free(stack);
 	fclose(file);
-		return (0);
+	return (0);
 }
 
