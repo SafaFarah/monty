@@ -13,6 +13,8 @@ void _push(stack_t **stack, unsigned int line_number)
 
 	if (info.argv != NULL)
 	{
+		if (info.argv[0] == '-')
+			i++;
 		for (; info.argv[i] != '\0'; i++)
 		{
 			if (info.argv[i] > 57 || info.argv[i] < 48)
