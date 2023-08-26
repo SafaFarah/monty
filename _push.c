@@ -9,17 +9,23 @@
 void _push(stack_t **stack, unsigned int line_number)
 {
 	stack_t *temp, *new;
-	int n, i, nodigit;
+	int n, i = 0, nodigit = 0;
 
 	if (info.argv != NULL)
 	{
 		for (i = 0; info.argv[i] != '\0'; i++)
 		{
-			if (!(_isdigit(info.argv[i])))
+			if (info.argv[i] > 57 || info.argv[i] < 48)
 				nodigit = 1;
 		}
 	}
-	if (info.argv == NULL || nodigit == 1)
+	if (nodigit == 1)
+	{
+		fprintf(stderr, "L%d: usage: push integer\n", line_number);
+		_finish(info.file, stack, info.monty_op);
+		exit(EXIT_FAILURE);
+	}
+	else
 	{
 		fprintf(stderr, "L%d: usage: push integer\n", line_number);
 		_finish(info.file, stack, info.monty_op);
@@ -31,6 +37,7 @@ void _push(stack_t **stack, unsigned int line_number)
 	if (new == NULL)
 	{
 		fprintf(stderr, "Error: malloc failed\n");
+		_finish(info.file, stack, info.monty_op);
 		exit(EXIT_FAILURE);
 	}
 	new->n = n;
@@ -47,22 +54,3 @@ void _push(stack_t **stack, unsigned int line_number)
 		*stack = new;
 	}
 }
-
-
-
-
-/**
- * _isdigit - a function that checks for digit.
- * @c: character
- *
- * Return: 1 if is digit or 0 if is not digit.
- */
-int _isdigit(int c)
-{
-	if (c >= 48 && c <= 57)
-		return (1);
-	else
-		return (0);
-}
-
-
