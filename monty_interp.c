@@ -1,5 +1,5 @@
 #include "monty.h"
-info_t info = {NULL, NULL, NULL, 0};
+info_t info = {NULL, NULL, NULL};
 /**
  * main - interpreter for Monty ByteCodes files.
  * @argc: number of arguments.
@@ -12,12 +12,6 @@ int main(int argc, string argv[])
 	FILE *file;
 	ssize_t readline = 1;
 	string monty_op;
-=======
-int main(int argc, char **argv)
-{
-	FILE *file;
-	ssize_t readline = 1;
-	char *monty_op;
 	size_t size = 0;
 	unsigned int line_number = 0;
 	stack_t *stack = NULL;
