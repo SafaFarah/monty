@@ -58,7 +58,6 @@ typedef struct info_s
 } info_t;
 
 extern info_t info;
-typedef char *string;
 
 void _push(stack_t **stack, unsigned int line_number);
 int _isdigit(int c);

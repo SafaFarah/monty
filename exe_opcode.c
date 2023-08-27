@@ -26,7 +26,7 @@ int exe_opcode(string monty_op, stack_t **stack, unsigned int line, FILE *file)
 		{NULL, NULL}
 	};
 	unsigned int i = 0;
-	string opc;
+	char *opc;
 
 	opc = strtok(monty_op, " \n\t");
 	if (opc != NULL && opc[0] == '#')

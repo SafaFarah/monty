@@ -7,11 +7,11 @@ info_t info = {NULL, NULL, NULL};
  *
  * Return: 0 on success.
  */
-int main(int argc, string argv[])
+int main(int argc, char **argv)
 {
 	FILE *file;
 	ssize_t readline = 1;
-	string monty_op;
+	char * monty_op;
 	size_t size = 0;
 	unsigned int line_number = 0;
 	stack_t *stack = NULL;
