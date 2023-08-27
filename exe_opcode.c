@@ -9,7 +9,7 @@
  *
  * Return: 0 on success or 1 on failure.
  */
-int exe_opcode(string monty_op, stack_t **stack, unsigned int line, FILE *file)
+int exe_opcode(char *monty_op, stack_t **stack, unsigned int line, FILE *file)
 {
 	instruction_t operations[] = {
 		{"push", _push},
